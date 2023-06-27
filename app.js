@@ -86,22 +86,20 @@ var SceneDeJeu = new Phaser.Class({
     },
     
     handleSwipeEnd: function(pointer) {
-    this.swipeEndX = pointer.x;
-    
-    // Calculer la distance horizontale du geste de glissement
-    const swipeDistance = this.swipeEndX - this.swipeStartX;
-    
-    // Si la distance du geste de glissement dépasse le seuil, déterminez la direction du glissement et effectuez l'action correspondante
-    if (Math.abs(swipeDistance) > this.swipeThreshold) {
-        if (swipeDistance > 0) {
-            this.moveRightTouch();
-        } else {
-            this.moveLeftTouch();
+        this.swipeEndX = pointer.x;
+        
+        // Calculer la distance horizontale du geste de glissement
+        const swipeDistance = this.swipeEndX - this.swipeStartX;
+        
+        // Si la distance du geste de glissement dépasse le seuil, déterminez la direction du glissement et effectuez l'action correspondante
+        if (Math.abs(swipeDistance) > this.swipeThreshold) {
+            if (swipeDistance > 0) {
+                this.moveRight();
+            } else {
+                this.moveLeft();
+            }
         }
-    }
-    // Réinitialiser la position de départ pour le prochain geste de glissement
-    this.swipeStartX = this.swipeEndX;
-},
+    },
     
     
     endSwipe: function(pointer) {
