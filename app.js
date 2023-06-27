@@ -23,8 +23,7 @@ var SceneDeJeu = new Phaser.Class({
         this.dynamites = this.physics.add.group();
         this.dynamiteTimer = this.time.addEvent({ delay: 9000, callback: this.dropDynamite, callbackScope: this, loop: true });
 
-        // Ajoutez ces lignes
-this.input.on('pointerdown', this.jump, this);
+        this.input.on('pointerdown', this.jump, this);
 
 
         this.score = 0;
@@ -44,7 +43,7 @@ this.input.on('pointerdown', this.jump, this);
     // Variables de suivi du geste de glissement
     this.swipeStartX = 0;
     this.swipeEndX = 0;
-    this.swipeThreshold = 50; // Ajustez cette valeur pour définir la sensibilité du geste de glissement
+    this.swipeThreshold = 50;
 
         // Jouez la musique de la scène de jeu
         let music = this.sound.add('jeuMusic');
@@ -87,20 +86,22 @@ this.input.on('pointerdown', this.jump, this);
     },
     
     handleSwipeEnd: function(pointer) {
-        this.swipeEndX = pointer.x;
-        
-        // Calculer la distance horizontale du geste de glissement
-        const swipeDistance = this.swipeEndX - this.swipeStartX;
-        
-        // Si la distance du geste de glissement dépasse le seuil, déterminez la direction du glissement et effectuez l'action correspondante
-        if (Math.abs(swipeDistance) > this.swipeThreshold) {
-            if (swipeDistance > 0) {
-                this.moveRight();
-            } else {
-                this.moveLeft();
-            }
+    this.swipeEndX = pointer.x;
+    
+    // Calculer la distance horizontale du geste de glissement
+    const swipeDistance = this.swipeEndX - this.swipeStartX;
+    
+    // Si la distance du geste de glissement dépasse le seuil, déterminez la direction du glissement et effectuez l'action correspondante
+    if (Math.abs(swipeDistance) > this.swipeThreshold) {
+        if (swipeDistance > 0) {
+            this.moveRightTouch();
+        } else {
+            this.moveLeftTouch();
         }
-    },
+    }
+    // Réinitialiser la position de départ pour le prochain geste de glissement
+    this.swipeStartX = this.swipeEndX;
+},
     
     
     endSwipe: function(pointer) {
